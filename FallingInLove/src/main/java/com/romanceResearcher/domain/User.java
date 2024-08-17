@@ -1,10 +1,16 @@
 package com.romanceResearcher.domain;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.ObjectInputStream;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
 public class User {
+
+
 
     private long userNo; // 회원 번호
     private String name; // 회원 이름
@@ -105,6 +111,9 @@ public class User {
         this.point = point;
     }
 
+    public void setUserNo(long userNo) {
+        this.userNo = userNo;
+    }
 
     @Override
     public boolean equals(Object o) {
@@ -134,6 +143,5 @@ public class User {
                 ", point=" + point +
                 '}';
     }
-
 
 }
