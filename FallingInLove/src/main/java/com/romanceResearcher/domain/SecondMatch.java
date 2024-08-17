@@ -1,10 +1,11 @@
 package com.romanceResearcher.domain;
 
+import java.io.Serializable;
 import java.util.List;
 
 // 서로 호감표시를 보낸 기록을 담는 클래스
 // 매치 여부를 알 수 있음
-public class SecondMatch {
+public class SecondMatch implements Serializable {
 
     private long secondMatchNo; // 세컨 매치 번호
     private List<User> counple;

@@ -25,8 +25,6 @@ public class MatchService {
     }
 
 
-
-
     public void randomDating(User user) {
         randomPartners = userRepository.findMatchingPartner(user);
 
@@ -61,6 +59,8 @@ public class MatchService {
 
 
     }
+
+
 
 
 }

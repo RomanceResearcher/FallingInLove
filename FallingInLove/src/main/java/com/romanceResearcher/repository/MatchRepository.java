@@ -53,4 +53,9 @@ public class MatchRepository {
 
 
 
+
+
+    // acceptFlag -> true
+    // sRepo (인자)
+
 }
