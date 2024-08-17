@@ -44,7 +44,6 @@ public class User {
         return userNo;
     }
 
-
     public String getName() {
         return name;
     }
