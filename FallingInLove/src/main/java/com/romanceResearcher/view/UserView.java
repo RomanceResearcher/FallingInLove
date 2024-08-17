@@ -1,13 +1,9 @@
 package com.romanceResearcher.view;
 
 import com.romanceResearcher.domain.User;
-import com.romanceResearcher.repository.UserRepository;
-import com.romanceResearcher.service.MatchService;
 import com.romanceResearcher.service.PictureService;
 import com.romanceResearcher.service.UserService;
 
-import java.awt.*;
-import java.util.List;
 import java.util.Scanner;
 
 /* 로그인 후 나오는 메뉴 선택 화면 */
@@ -30,7 +26,7 @@ public class UserView {
         RandomMatchView randomMatchView = new RandomMatchView(user);
 
         while (true) {
-            System.out.print("원하는 메뉴를 선택하세요 (1 : 로그아웃, 2: 소개팅하러 가기, 3: 마이페이지");
+            System.out.print("원하는 메뉴를 선택하세요 (1 : 로그아웃, 2: 소개팅하러 가기, 3: 마이페이지, 4. 포인트 충전");
             int action = sc.nextInt();
             switch (action) {
                 case 1 : return 1;
@@ -38,11 +34,22 @@ public class UserView {
                 case 3 :
                     boolean deletedFlag = userInfoUi();
                     if (deletedFlag) return 2;
+                case 4 : chargePointView(sc); break;
                 default :
                     System.out.println("잘못 입력하셨습니다. 메뉴에 있는 번호를 입력해주세요.");
                     break;
             }
         }
+    }
+
+    // 포인트 충전 view
+    private void chargePointView(Scanner sc) {
+
+        System.out.print("얼마를 충전하시겠어요? : ");
+        int point = sc.nextInt();
+        user.setPoint(point);
+        System.out.println(point + " 가 충전 되었습니다.");
+        System.out.println("내 포인트 : " + user.getPoint());
     }
 
     // 마이페이지 UI

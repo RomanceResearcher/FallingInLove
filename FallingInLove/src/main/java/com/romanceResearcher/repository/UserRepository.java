@@ -112,7 +112,7 @@ public class UserRepository {
     public int updateUser(User user) {
 
         for (int i = 0; i < users.size(); i++) {
-            if (users.get(i).equals(user)) {
+            if (users.get(i).getId().equals(user.getId())) {
                 users.set(i, user);
 
                 File file = new File(FILENAME);
@@ -127,7 +127,7 @@ public class UserRepository {
     public int deleteUser(User user) {
 
         for (int i = 0; i < users.size(); i++) {
-            if (users.get(i).equals(user)) {
+            if (users.get(i).getId().equals(user.getId())) {
                 users.remove(i);
                 userIdPw.remove(user.getId());
 
@@ -188,4 +188,5 @@ public class UserRepository {
         // 필터링된 조회를 리스트로 반환한다.
         return matchingPartners;
     }
+
 }
