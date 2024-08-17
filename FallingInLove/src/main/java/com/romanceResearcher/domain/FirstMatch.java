@@ -16,6 +16,7 @@ public class FirstMatch {
         this.createDate = createDate;
     }
 
+
     public boolean isAcceptFlag() {
         return acceptFlag;
     }
