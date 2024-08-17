@@ -28,10 +28,25 @@ public class UserRepository {
         File file = new File(FILENAME);
 
         if (!file.exists()) {
+            User sample01 = new User("test01", "2015-10-15", "testId01", "pwd01", "email01", "010-1111-1111", 'M');
+            User sample02 = new User("test02", "2014-09-25", "testId02", "pwd02", "email02", "010-2222-1111", 'M');
+            User sample03 = new User("test03", "2016-11-08", "testId03", "pwd03", "email03", "010-3333-1111", 'M');
+
+            User sample04 = new User("test04", "2012-10-14", "testId04", "pwd04", "email04", "010-4444-1111", 'W');
+            User sample05 = new User("test05", "2013-02-27", "testId05", "pwd05", "email05", "010-5555-1111", 'W');
+            User sample06 = new User("test06", "2010-12-08", "testId06", "pwd06", "email06", "010-6666-1111", 'W');
+
+            users.add(sample01);
+            users.add(sample02);
+            users.add(sample03);
+            users.add(sample04);
+            users.add(sample05);
+            users.add(sample06);
+
             saveUser(file);
-        } else {
-            loadUser(file);
         }
+        loadUser(file);
+
     }
 
     // userRe 파일에서 데이터 꺼내오기
@@ -67,6 +82,7 @@ public class UserRepository {
     public int addUser(User user) {
 
         int result = 0;
+        user.setUserNo(getUserNo());
 
         try (MyObjectOutputStream moo = new MyObjectOutputStream(new FileOutputStream(FILENAME, true))) {
             if (userIdPw.containsKey(user.getId())) { // ID 중복 체크
@@ -74,6 +90,7 @@ public class UserRepository {
             }
             moo.writeObject(user);
             users.add(user);
+            userIdPw.put(user.getId(), user.getPwd());
             result = 1;
 
         } catch (IOException e) {

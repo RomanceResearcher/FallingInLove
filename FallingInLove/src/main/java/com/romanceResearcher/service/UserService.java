@@ -78,10 +78,11 @@ public class UserService {
             User findedUser = userRepository.findById(id).get();
             UserView userView = new UserView(findedUser, this);
             userView.firstHomePage();
+        }else {
+            // 로그인 실패 -> 처음 화면으로 이동
+            System.out.println("로그인 실패하였습니다.");
         }
-
-        // 로그인 실패 -> 처음 화면으로 이동
-        System.out.println("로그인 실패하였습니다.");
+        System.out.println("로그아웃합니다.");
     }
 
     // user 검증

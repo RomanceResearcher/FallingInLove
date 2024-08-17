@@ -34,7 +34,7 @@ public class Application {
                 System.out.println("회원가입 정보를 입력해주세요.");
                 System.out.print("이름 : ");
                 String name = sc.nextLine();
-                System.out.print("생년월일");
+                System.out.print("생년월일 : ");
                 String birth = sc.nextLine();
                 String id = "";
                 do {
@@ -43,7 +43,7 @@ public class Application {
                 } while(userService.isDuplicatedID(id));
                 System.out.print("pw : ");
                 String pw = sc.nextLine();
-                System.out.print("email :  ");
+                System.out.print("email : ");
                 String email = sc.nextLine();
                 System.out.print("휴대번호 (형식 : 000-0000-0000) : ");
                 String phone = sc.nextLine();

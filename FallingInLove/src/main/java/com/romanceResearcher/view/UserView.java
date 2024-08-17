@@ -27,6 +27,11 @@ public class UserView {
 
         while (true) {
             System.out.print("원하는 메뉴를 선택하세요 (1 : 로그아웃, 2: 소개팅하러 가기, 3: 마이페이지, 4: 회원 정보 수정, 5: 회원 탈퇴");
+            int action = sc.nextInt();
+            switch (action) {
+                case 1 : return;
+                case 2 :
+            }
         }
     }
 

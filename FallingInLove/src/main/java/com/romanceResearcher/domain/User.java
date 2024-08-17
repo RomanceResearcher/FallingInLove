@@ -42,6 +42,7 @@ public class User implements Serializable {
         this.point = 0;
     }
 
+
     public long getUserNo() {
         return userNo;
     }
