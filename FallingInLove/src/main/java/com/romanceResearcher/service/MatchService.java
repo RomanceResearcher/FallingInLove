@@ -22,9 +22,13 @@ public class MatchService {
 
     public void randomDating(User user) {
         List<User> randomPartners = userRepository.findMatchingPartner(user);
-        Random random = new Random();
-        int randomPartnerId = random.nextInt(randomPartners.size());
-        User randomDatingPartner = randomPartners.get(randomPartnerId);
+
+        while (true) {
+            int randomPartnerId = (int) (Math.random() * randomPartners.size() + 1);
+            User randomDatingPartner = randomPartners.get(randomPartnerId);
+            System.out.println(randomDatingPartner);
+
+        }
     }
 
 
