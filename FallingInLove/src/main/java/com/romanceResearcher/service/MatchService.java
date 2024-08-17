@@ -44,7 +44,7 @@ public class MatchService {
                         System.out.println("번호를 잘 못 입력하였습니다.");
                 }
             } catch (Exception e) {
-                System.out.println("메뉴 숫자를 입력해주세요.");
+                System.out.println("숫자를 입력해주세요.");
                 sc.next(); // 버퍼 내 잘못된 입력값 버리기
             }
 

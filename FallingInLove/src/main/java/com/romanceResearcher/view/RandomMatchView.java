@@ -10,20 +10,21 @@ import java.util.Scanner;
 // 랜덤 매칭 화면
 public class RandomMatchView {
 
-    // 상대 목록을 보여준다.(상대 객체1)
-    // 유저 repo에 리스트파일 -> 랜덤으로 유저 정보를 전송받음 -> 뷰에 존재하는 리스트에 담고 -> 거기서 랜덤으로 한개씩 화면에 도출
-    // 필터링 된 회원 리스트 -> 2차적으로 필터링 하는 것
+    private final User user; // 개인 유저
+    private final MatchService matchService; // 개인 유저에 대한 Match 서비스
 
+    public RandomMatchView(User user, MatchService matchService) {
+        this.user = user;
+        this.matchService = matchService;
+    }
 
-    // 소개팅 UI
     Scanner sc = new Scanner(System.in);
 
-    // 1. 랜덤 소개팅 하기
-    // 2. 호감 받은 상대 프로필 조회
-    // 3. 호감 보낸 상대 프로필 조회
-
+    // 소개팅 UI
     public void datingUI() {
-
+        // 1. 랜덤 소개팅 하기
+        // 2. 호감 받은 상대 프로필 조회
+        // 3. 호감 보낸 상대 프로필 조회
         while (true) {
             System.out.println("===== 소개팅 화면입니다. =====");
             System.out.println("1 : 랜덤 소개팅 하기");
