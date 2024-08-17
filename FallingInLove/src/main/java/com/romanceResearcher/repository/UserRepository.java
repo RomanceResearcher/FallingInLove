@@ -129,6 +129,7 @@ public class UserRepository {
         for (int i = 0; i < users.size(); i++) {
             if (users.get(i).equals(user)) {
                 users.remove(i);
+                userIdPw.remove(user.getId());
 
                 File file = new File(FILENAME);
                 saveUser(file);
