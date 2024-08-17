@@ -1,8 +1,9 @@
 package com.romanceResearcher.domain;
 
+import java.io.Serializable;
 import java.time.LocalTime;
 
-public class FirstMatch {
+public class FirstMatch implements Serializable {
 
     private long firstMatchNo; // 매치 번호
     private User to; // 호감 보낸 사람

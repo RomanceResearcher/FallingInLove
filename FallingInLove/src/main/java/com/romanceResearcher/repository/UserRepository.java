@@ -8,26 +8,48 @@ import java.util.*;
 
 public class UserRepository {
 
+
+
     private static final String FILENAME = "src/main/java/com/romanceResearcher/db/userRe.dat"; // DB 파일
     private List<User> users = new ArrayList<>(); // 모든 회원 유저
     private HashMap<String, String> userIdPw = new HashMap<>();
 
-    public UserRepository() {
+
+    private static UserRepository instance;
+
+    public static UserRepository getInstance() {
+        if (instance == null) {
+            instance = new UserRepository();
+        }
+        return instance;
+    }
+
+    // UserRepository 생성자
+    // 파일에서 읽어와서 users 에 저장
+    private UserRepository() {
 
         File file = new File(FILENAME);
 
         if (!file.exists()) {
+            User sample01 = new User("test01", "2015-10-15", "testId01", "pwd01", "email01", "010-1111-1111", 'M');
+            User sample02 = new User("test02", "2014-09-25", "testId02", "pwd02", "email02", "010-2222-1111", 'M');
+            User sample03 = new User("test03", "2016-11-08", "testId03", "pwd03", "email03", "010-3333-1111", 'M');
 
-            try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(FILENAME))) {
-                // sample user 추가
-                userIdPw.put("ID1", "password1");
-                users.add(new User());
-            } catch (IOException e) {
-                System.out.println("해당 파일이 존재하지 않습니다.");
-            }
-        } else {
-            loadUser(file);
+            User sample04 = new User("test04", "2012-10-14", "testId04", "pwd04", "email04", "010-4444-1111", 'W');
+            User sample05 = new User("test05", "2013-02-27", "testId05", "pwd05", "email05", "010-5555-1111", 'W');
+            User sample06 = new User("test06", "2010-12-08", "testId06", "pwd06", "email06", "010-6666-1111", 'W');
+
+            users.add(sample01);
+            users.add(sample02);
+            users.add(sample03);
+            users.add(sample04);
+            users.add(sample05);
+            users.add(sample06);
+
+            saveUser(file);
         }
+        loadUser(file);
+
     }
 
     // userRe 파일에서 데이터 꺼내오기
@@ -63,6 +85,7 @@ public class UserRepository {
     public int addUser(User user) {
 
         int result = 0;
+        user.setUserNo(getUserNo());
 
         try (MyObjectOutputStream moo = new MyObjectOutputStream(new FileOutputStream(FILENAME, true))) {
             if (userIdPw.containsKey(user.getId())) { // ID 중복 체크
@@ -70,6 +93,7 @@ public class UserRepository {
             }
             moo.writeObject(user);
             users.add(user);
+            userIdPw.put(user.getId(), user.getPwd());
             result = 1;
 
         } catch (IOException e) {
@@ -77,6 +101,11 @@ public class UserRepository {
         }
 
         return result;
+    }
+
+    // userId set 만 가져오기
+    public Set<String> getIds() {
+        return userIdPw.keySet();
     }
 
     // 회원 정보 수정 (User Update)

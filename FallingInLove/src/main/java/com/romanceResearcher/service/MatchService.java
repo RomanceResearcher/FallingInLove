@@ -18,16 +18,11 @@ public class MatchService {
     }
 
 
-
-
     public void randomDating(User user) {
         List<User> randomPartners = userRepository.findMatchingPartner(user);
         Random random = new Random();
         int randomPartnerId = random.nextInt(randomPartners.size());
         User randomDatingPartner = randomPartners.get(randomPartnerId);
     }
-
-
-
 
 }

@@ -7,4 +7,5 @@ public class SecondMatchRepository {
     // 채팅방 오픈 여부
 
     // 포인트 차감
+
 }
