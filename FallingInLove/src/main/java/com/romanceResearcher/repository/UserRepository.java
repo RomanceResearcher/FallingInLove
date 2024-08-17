@@ -9,22 +9,26 @@ import java.util.*;
 public class UserRepository {
 
     private static final String FILENAME = "src/main/java/com/romanceResearcher/db/userRe.dat";
-    private List<User> users = new ArrayList<>();
-    private HashMap<String, String> userIdPw = new HashMap<>();
+    private final List<User> users = new ArrayList<>();
+    private final HashMap<String, String> userIdPw = new HashMap<>();
 
-    public UserRepository() {
+    private static UserRepository instance;
+
+    public static UserRepository getInstance() {
+        if (instance == null) {
+            instance = new UserRepository();
+        }
+        return instance;
+    }
+
+    // UserRepository 생성자
+    // 파일에서 읽어와서 users 에 저장
+    private UserRepository() {
 
         File file = new File(FILENAME);
 
         if (!file.exists()) {
-
-            try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(FILENAME))) {
-                // sample user 추가
-                userIdPw.put("ID1", "password1");
-                users.add(new User());
-            } catch (IOException e) {
-                System.out.println("해당 파일이 존재하지 않습니다.");
-            }
+            saveUser(file);
         } else {
             loadUser(file);
         }
@@ -77,6 +81,11 @@ public class UserRepository {
         }
 
         return result;
+    }
+
+    // userId set 만 가져오기
+    public Set<String> getIds() {
+        return userIdPw.keySet();
     }
 
     // 회원 정보 수정 (User Update)

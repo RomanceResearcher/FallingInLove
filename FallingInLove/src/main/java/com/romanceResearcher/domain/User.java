@@ -3,18 +3,19 @@ package com.romanceResearcher.domain;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.ObjectInputStream;
+import java.io.Serializable;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
-public class User {
-
-
+public class User implements Serializable {
 
     private long userNo; // 회원 번호
     private String name; // 회원 이름
-    private Date birth; // 생년월일
+    private LocalDate birth; // 생년월일
     private String id; // 회원 아이디
     private String pwd; // 회원 비밀번호
     private String email; // 회원 이메일
@@ -28,15 +29,16 @@ public class User {
     }
 
     // 회원 가입 용도
-    public User(String name, Date birth, String id, String pwd, String email, String hp, char gender, List<String> pictures) {
+    public User(String name, String birth, String id, String pwd, String email, String hp, char gender) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         this.name = name;
-        this.birth = birth;
+        this.birth = LocalDate.parse(birth, formatter);
         this.id = id;
         this.pwd = pwd;
         this.email = email;
         this.hp = hp;
         this.gender = gender;
-        this.pictures = pictures;
+        this.pictures = new ArrayList<>();
         this.point = 0;
     }
 
@@ -53,7 +55,7 @@ public class User {
         this.name = name;
     }
 
-    public Date getBirth() {
+    public LocalDate getBirth() {
         return birth;
     }
 

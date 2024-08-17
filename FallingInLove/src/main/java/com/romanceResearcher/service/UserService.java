@@ -7,13 +7,23 @@ import com.romanceResearcher.view.UserView;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 
 public class UserService {
 
     private final UserRepository userRepository;
+    private static UserService instance;
 
-    public UserService() {
-        userRepository = new UserRepository();
+
+    public static UserService getInstance() {
+        if (instance == null) {
+            instance = new UserService();
+        }
+        return instance;
+    }
+
+    private UserService() {
+        userRepository = UserRepository.getInstance();
     }
 
     // 회원 가입
@@ -23,9 +33,24 @@ public class UserService {
 
         if (result == 1) {
             System.out.println(user.getId() + "님 회원 가입이 완료되었습니다.");
+            System.out.println("로그인 후 이용해주세요.");
         } else {
             System.out.println("회원 가입에 실패하였습니다. 다시 시도해주세요.");
         }
+        System.out.println("처음 화면으로 이동합니다.");
+    }
+
+    // 회원 가입시 ID 중복 체크
+    public boolean isDuplicatedID(String id) {
+        boolean idDuplicatedFlag = userRepository.getIds().contains(id);
+
+        if (idDuplicatedFlag) {
+            System.out.println("중복된 ID가 존재합니다. ID를 다시 입력해주세요!");
+        } else {
+            System.out.println("사용 가능한 ID 입니다.");
+        }
+
+        return idDuplicatedFlag;
     }
 
     // 회원 수정
