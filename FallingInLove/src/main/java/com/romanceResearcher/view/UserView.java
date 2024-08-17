@@ -12,8 +12,8 @@ import java.util.Scanner;
 /* 로그인 후 나오는 메뉴 선택 화면 */
 public class UserView {
 
-    private final User user;
-    private final UserService userService;
+    private final User user; // 개인 유저
+    private final UserService userService; // 개인 유저에 대한 서비스
 
     public UserView(User user, UserService userService) {
         this.user = user;

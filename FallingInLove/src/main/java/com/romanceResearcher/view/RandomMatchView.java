@@ -35,9 +35,9 @@ public class RandomMatchView {
 
         switch (action) {
             case 1: MatchService.randomDating(); break;
-            case 2: MatchService.getSignalPartners(); break;
-            case 3: MatchService.sendSignalPartners(); break;
-            case 4: goBack(); break;
+            case 2: MatchService.showPartnersOfReceiveSignal(); break;
+            case 3: MatchService.showPartnersOfSendSignal(); break;
+            case 4: return;
             default :
                 System.out.println("번호를 잘 못 입력하였습니다.");
         }
@@ -46,9 +46,7 @@ public class RandomMatchView {
 
     }
 
-    public void goBack() {
 
-    }
 
 
 }
