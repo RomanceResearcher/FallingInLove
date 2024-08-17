@@ -1,6 +1,7 @@
 package com.romanceResearcher.view;
 
 import com.romanceResearcher.domain.User;
+import com.romanceResearcher.repository.UserRepository;
 import com.romanceResearcher.service.MatchService;
 import com.romanceResearcher.service.UserService;
 
@@ -19,7 +20,7 @@ public class RandomMatchView {
     }
 
     Scanner sc = new Scanner(System.in);
-
+    MatchService matchservice = new MatchService(new UserRepository()); // 수정 예정
     // 소개팅 UI
     public void datingUI() {
         // 1. 랜덤 소개팅 하기

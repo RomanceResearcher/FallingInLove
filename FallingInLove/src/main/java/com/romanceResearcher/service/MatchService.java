@@ -37,7 +37,7 @@ public class MatchService {
             try {
                 int action = sc.nextInt(); // 입력받은 번호를 action 변수에 저장
                 switch (action) {
-                    case 1: continue; // 호감 보내기 -> 호감 보낸 기록을 생성해서 저장해야됌
+                    case 1: /*(기능 구현 예정)*/continue; // 호감 보내기 -> 호감 보낸 기록을 생성해서 저장해야됌
                     case 2: continue; // 다음 상대 보기
                     case 3: return; // 메소드 종료
                     default :
