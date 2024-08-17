@@ -25,8 +25,9 @@ public class UserRepository {
             } catch (IOException e) {
                 System.out.println("해당 파일이 존재하지 않습니다.");
             }
+        } else {
+            loadUser(file);
         }
-        loadUser(file);
     }
 
     // userRe 파일에서 데이터 꺼내오기
