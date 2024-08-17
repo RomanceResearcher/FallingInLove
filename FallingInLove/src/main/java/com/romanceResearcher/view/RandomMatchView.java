@@ -38,8 +38,8 @@ public class RandomMatchView {
                 int action = sc.nextInt(); // 입력받은 번호를 action 변수에 저장
                 switch (action) {
                     case 1: matchService.randomDating(user); break; // 랜덤 매칭 기능 호출
-                    case 2: matchService.showPartnersOfReceiveSignal(); break; // 호감 받은 상대 조회
-                    case 3: matchService.showPartnersOfSendSignal(); break; // 호감 보낸 상대 조회
+                    case 2: matchService.showReceiveSignalfromPartner(); break; // 호감 받은 상대 조회
+                    case 3: matchService.showSendSignaltoPartner(user); break; // 호감 보낸 상대 조회
                     case 4: return; // 메소드 종료
                     default :
                         System.out.println("번호를 잘 못 입력하였습니다.");

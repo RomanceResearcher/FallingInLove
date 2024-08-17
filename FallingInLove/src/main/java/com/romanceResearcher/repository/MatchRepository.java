@@ -38,14 +38,14 @@ public class MatchRepository {
             firstMatches.add(sample02);
             firstMatches.add(sample03);
 
-            saveUser(file);
+            savefirstMatches(file);
         }
-        loadUser(file);
+        loadfirstMatches(file);
 
     }
 
     // firstMatches 파일에서 데이터 꺼내오기
-    public void loadUser(File file) {
+    public void loadfirstMatches(File file) {
 
         try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(file))) {
             while (true) {
@@ -60,7 +60,7 @@ public class MatchRepository {
     }
 
     // firstMatches 파일에 데이터 저장하기
-    public void saveUser(File file) {
+    public void savefirstMatches(File file) {
 
         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(file))) {
             for (FirstMatch firstMatch : firstMatches) {
@@ -90,6 +90,19 @@ public class MatchRepository {
         SecondMatchRepository.addSecondMatch();
     }
 
+    // 내가 호감보낸 상대 목록 리스트 생성 후 출력
+    public void findmyFirstmatches(User user) {
+        // FirstMatch list를 가져온다.
+        List<FirstMatch> myFirstMatches = new ArrayList<>(); // 내가 호감보낸 상대 리스트 생성
+        // 매개변수와 User to 가 같으면 myFirstMatches 리스트에 담는다.
+        for (int i = 0; i < firstMatches.size(); i++) {
+            if (user/*사용자*/.equals(firstMatches.get(i).getTo())) {
+                myFirstMatches.add(firstMatches.get(i));
+            }
+        }
+        // 조회된 리스트 출력
+        System.out.println(myFirstMatches);
+    }
 
 
 

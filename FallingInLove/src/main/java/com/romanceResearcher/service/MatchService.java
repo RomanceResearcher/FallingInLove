@@ -1,5 +1,6 @@
 package com.romanceResearcher.service;
 
+import com.romanceResearcher.domain.FirstMatch;
 import com.romanceResearcher.domain.User;
 import com.romanceResearcher.repository.MatchRepository;
 import com.romanceResearcher.repository.UserRepository;
@@ -58,7 +59,9 @@ public class MatchService {
         MatchRepository.addFirstMatch(User randomDatingPartner); // firstMatch 추가
     }
 
+    // 사용자가 호감을 보낸 유저 목록 조회
+    public void showSendSignaltoPartner(User user) {
+        MatchRepository.findmyFirstmatches(user/*사용자*/);
 
-
-
+    }
 }
