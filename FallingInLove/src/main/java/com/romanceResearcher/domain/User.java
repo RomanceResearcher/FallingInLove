@@ -47,7 +47,6 @@ public class User implements Serializable {
         return userNo;
     }
 
-
     public String getName() {
         return name;
     }
@@ -146,5 +145,6 @@ public class User implements Serializable {
                 ", point=" + point +
                 '}';
     }
+
 
 }

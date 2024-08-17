@@ -8,9 +8,12 @@ import java.util.*;
 
 public class UserRepository {
 
-    private static final String FILENAME = "src/main/java/com/romanceResearcher/db/userRe.dat";
-    private final List<User> users = new ArrayList<>();
-    private final HashMap<String, String> userIdPw = new HashMap<>();
+
+
+    private static final String FILENAME = "src/main/java/com/romanceResearcher/db/userRe.dat"; // DB 파일
+    private List<User> users = new ArrayList<>(); // 모든 회원 유저
+    private HashMap<String, String> userIdPw = new HashMap<>();
+
 
     private static UserRepository instance;
 
@@ -170,4 +173,5 @@ public class UserRepository {
         }
         return Optional.of(null);
     }
+
 }
