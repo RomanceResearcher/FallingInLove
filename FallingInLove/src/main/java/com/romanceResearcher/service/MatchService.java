@@ -4,23 +4,27 @@ import com.romanceResearcher.domain.User;
 import com.romanceResearcher.repository.MatchRepository;
 import com.romanceResearcher.repository.UserRepository;
 
+import java.util.List;
+import java.util.Random;
+
 public class MatchService {
 
-    // 나, 상대 정보를 매개인자로 받아서 바탕으로 매치 정비
+    // 나, 상대 정보를 바탕으로 매치 정보 객체 생성
     // 매치 정보(객체) 생성
-    private final UserRepository userRepository;
-    private final MatchRepository matchRepository;
+    private UserRepository userRepository;
 
-    // 생성된 매치 정보(인자)를 repo로 보낸다.
-    //repo.aptjem(매치)
-    public MatchService(UserRepository userRepository, MatchRepository matchRepository) {
+    public MatchService(UserRepository userRepository) {
         this.userRepository = userRepository;
-        this.matchRepository = new matchRepository();
-
     }
 
-    public static void randomDating() {
 
+
+
+    public void randomDating(User user) {
+        List<User> randomPartners = userRepository.findMatchingPartner(user);
+        Random random = new Random();
+        int randomPartnerId = random.nextInt(randomPartners.size());
+        User randomDatingPartner = randomPartners.get(randomPartnerId);
     }
 
 

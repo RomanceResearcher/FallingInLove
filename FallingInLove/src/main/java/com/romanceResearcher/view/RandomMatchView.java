@@ -17,12 +17,13 @@ public class RandomMatchView {
 
     // 소개팅 UI
     Scanner sc = new Scanner(System.in);
-    int action = 0;
+
     // 1. 랜덤 소개팅 하기
     // 2. 호감 받은 상대 프로필 조회
     // 3. 호감 보낸 상대 프로필 조회
 
     public void datingUI() {
+
         while (true) {
             System.out.println("===== 소개팅 화면입니다. =====");
             System.out.println("1 : 랜덤 소개팅 하기");
@@ -30,18 +31,23 @@ public class RandomMatchView {
             System.out.println("3 : 호감있는 상대 프로필 조회하기");
             System.out.println("4 : 이전 화면으로 돌아가기");
             System.out.println("메뉴 선택 : ");
-            action = sc.nextInt();
-        }
 
-        switch (action) {
-            case 1: MatchService.randomDating(); break;
-            case 2: MatchService.showPartnersOfReceiveSignal(); break;
-            case 3: MatchService.showPartnersOfSendSignal(); break;
-            case 4: return;
-            default :
-                System.out.println("번호를 잘 못 입력하였습니다.");
-        }
+            try {
+                int action = sc.nextInt(); // 입력받은 번호를 action 변수에 저장
+                switch (action) {
+                    case 1: MatchService.randomDating(); break; // 랜덤 매칭 기능 호출
+                    case 2: MatchService.showPartnersOfReceiveSignal(); break; // 호감 받은 상대 조회
+                    case 3: MatchService.showPartnersOfSendSignal(); break; // 호감 보낸 상대 조회
+                    case 4: return; // 메소드 종료
+                    default :
+                        System.out.println("번호를 잘 못 입력하였습니다.");
+                }
+            } catch (Exception e) {
+                System.out.println("메뉴 숫자를 입력해주세요.");
+                sc.next(); // 버퍼 내 잘못된 입력값 버리기
+            }
 
+        }
 
 
     }
