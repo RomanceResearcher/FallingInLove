@@ -72,7 +72,7 @@ public class MatchRepository {
     }
 
     // 매치 기록 추가 (firstMatch Add)
-    public int addFirstMatch(User randomDatingPartner) {
+    public void addFirstMatch(User randomDatingPartner) {
 
         FirstMatch firstMatch = new FirstMatch(4, new User()/*나의 정보*/, randomDatingPartner, LocalTime.now());
         try (MyObjectOutputStream moo = new MyObjectOutputStream(new FileOutputStream(FILENAME, true))) {
@@ -83,14 +83,12 @@ public class MatchRepository {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-
     }
 
-    // 변경된 상대 유저의 정보를 FirstMatch 리스트에 저장
-    public static void acceptFlagUpdate(boolean likeSignal) {
-
+    // 내가 좋아요 한 상대가 소개팅에 동의한다면 secondMatches 리스트에 기록 저장
+    public void succeseMatching() {
+        SecondMatchRepository.addSecondMatch();
     }
-
 
 
 

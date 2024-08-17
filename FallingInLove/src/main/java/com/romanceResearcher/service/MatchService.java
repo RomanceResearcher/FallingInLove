@@ -56,8 +56,6 @@ public class MatchService {
     // 호감을 보낸 유저와의 firstMatch 생성 및 리스트 추가
     private void sendSignal(User randomDatingPartner) {
         MatchRepository.addFirstMatch(User randomDatingPartner); // firstMatch 추가
-
-
     }
 
 
