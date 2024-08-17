@@ -74,7 +74,7 @@ public class MatchRepository {
     // 매치 기록 추가 (firstMatch Add)
     public void addFirstMatch(User randomDatingPartner) {
 
-        FirstMatch firstMatch = new FirstMatch(4, new User()/*나의 정보*/, randomDatingPartner, LocalTime.now());
+        FirstMatch firstMatch = new FirstMatch(4, randomDatingPartner, new User()/*나의 정보*/, LocalTime.now());
         try (MyObjectOutputStream moo = new MyObjectOutputStream(new FileOutputStream(FILENAME, true))) {
 
             moo.writeObject(randomDatingPartner);
@@ -94,9 +94,9 @@ public class MatchRepository {
     public void findmyFirstmatches(User user) {
         // FirstMatch list를 가져온다.
         List<FirstMatch> myFirstMatches = new ArrayList<>(); // 내가 호감보낸 상대 리스트 생성
-        // 매개변수와 User to 가 같으면 myFirstMatches 리스트에 담는다.
+        // 매개변수와 User from 가 같으면 myFirstMatches 리스트에 담는다.
         for (int i = 0; i < firstMatches.size(); i++) {
-            if (user/*사용자*/.equals(firstMatches.get(i).getTo())) {
+            if (user/*사용자*/.equals(firstMatches.get(i).getFrom())) {
                 myFirstMatches.add(firstMatches.get(i));
             }
         }
