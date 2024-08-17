@@ -2,6 +2,7 @@ package com.romanceResearcher.repository;
 
 import com.romanceResearcher.domain.FirstMatch;
 import com.romanceResearcher.domain.User;
+import com.romanceResearcher.myio.MyObjectOutputStream;
 
 import java.io.*;
 import java.time.LocalTime;
@@ -70,11 +71,20 @@ public class MatchRepository {
         }
     }
 
+    // 매치 기록 추가 (firstMatch Add)
+    public int addFirstMatch(User randomDatingPartner) {
 
+        FirstMatch firstMatch = new FirstMatch(4, new User()/*나의 정보*/, randomDatingPartner, LocalTime.now());
+        try (MyObjectOutputStream moo = new MyObjectOutputStream(new FileOutputStream(FILENAME, true))) {
 
+            moo.writeObject(randomDatingPartner);
+            firstMatches.add(firstMatch);
 
-    public MatchRepository(File) {}
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
 
+    }
 
     // 변경된 상대 유저의 정보를 FirstMatch 리스트에 저장
     public static void acceptFlagUpdate(boolean likeSignal) {
