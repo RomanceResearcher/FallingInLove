@@ -17,6 +17,7 @@ public class FirstMatch implements Serializable {
         this.createDate = createDate;
     }
 
+
     public boolean isAcceptFlag() {
         return acceptFlag;
     }

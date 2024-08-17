@@ -4,6 +4,9 @@ import com.romanceResearcher.domain.FirstMatch;
 import com.romanceResearcher.domain.User;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -11,7 +14,25 @@ import java.util.List;
 public class MatchRepository {
 
     // 매치 기록을 저장하는 리스트 선언 및 초기화
+    private static final String FILENAME = "src/main/java/com/romanceResearcher/db/firstMatchRepo.dat";
     private final List<FirstMatch> firstMatches = new ArrayList<>();
+
+
+    public MatchRepository() {
+
+        File file = new File(FILENAME);
+
+        if (!file.exists()) {
+
+            try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(FILENAME))) {
+                // sample user 추가
+                firstMatches.add(new FirstMatch());
+            } catch (IOException e) {
+                System.out.println("해당 파일이 존재하지 않습니다.");
+            }
+        } else {
+            loadUser(file);
+        }
 
     // CRUD
     private long firstMatchgityNo; // 매치 번호
@@ -22,10 +43,19 @@ public class MatchRepository {
 
     public MatchRepository(File) {}
 
-    //f.add(매치) -> 리스트에 정보 입력
 
-    // 입력한 리스트를 파일에 저장
+    // 변경된 상대 유저의 정보를 FirstMatch 리스트에 저장
+    public static void acceptFlagUpdate(boolean likeSignal) {
+
+    }
+
+
+
+
+
+
 
     // acceptFlag -> true
     // sRepo (인자)
+
 }
