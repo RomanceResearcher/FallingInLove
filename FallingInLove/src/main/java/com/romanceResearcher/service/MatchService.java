@@ -50,10 +50,21 @@ public class MatchService {
         matchRepository.addFirstMatch(randomDatingPartner); // firstMatch 추가
     }
 
-    // 사용자한테 호감을 보낸 유저 목록 조회
-    public void getReceiveSignalFromPartner(User user) {
+    // 사용자한테 호감을 보낸 유저 목록 리스트 생성 후 반환
+    public List<FirstMatch> getReceiveSignalFromPartner(User user) {
+        // FirstMatch list를 가져온다.
         List<FirstMatch> allMatches = matchRepository.findAllMatches();
 
+        // 사용자에게 호감을 보낸 상대 리스트 생성
+        List<FirstMatch> appealToUserFirstMatches = new ArrayList<>();
+
+        // 매개변수와 User to 가 같으면 appealToUserFirstMatches 리스트에 담는다.
+        for (int i = 0; i < allMatches.size(); i++) {
+            if (user.getId().equals(allMatches.get(i).getTo().getId())); {
+                appealToUserFirstMatches.add(allMatches.get(i));
+            }
+        }
+        return appealToUserFirstMatches;
     }
 
 
