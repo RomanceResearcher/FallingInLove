@@ -25,7 +25,7 @@ public class MatchRepository {
 
     // MatchRepository 생성자
     // 파일에서 읽어와서 firstMatches 에 저장
-    private UserRepository() {
+    private MatchRepository() {
 
         File file = new File(FILENAME);
 
@@ -38,7 +38,7 @@ public class MatchRepository {
             firstMatches.add(sample02);
             firstMatches.add(sample03);
 
-            savefirstMatches(file);
+            saveFirstMatches(file);
         }
         loadfirstMatches(file);
 
@@ -60,7 +60,7 @@ public class MatchRepository {
     }
 
     // firstMatches 파일에 데이터 저장하기
-    public void savefirstMatches(File file) {
+    public void saveFirstMatches(File file) {
 
         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(file))) {
             for (FirstMatch firstMatch : firstMatches) {
@@ -70,6 +70,8 @@ public class MatchRepository {
             throw new RuntimeException(e);
         }
     }
+
+
 
     // 매치 기록 추가 (firstMatch Add)
     public void addFirstMatch(User randomDatingPartner) {
@@ -85,27 +87,12 @@ public class MatchRepository {
         }
     }
 
-    // 내가 좋아요 한 상대가 소개팅에 동의한다면 secondMatches 리스트에 기록 저장
-    public void succeseMatching() {
-        SecondMatchRepository.addSecondMatch();
+
+
+    // FirstMatch 리스트 반환
+    public List<FirstMatch> findAllMatches() {
+        return firstMatches;
     }
-
-    // 내가 호감보낸 상대 목록 리스트 생성 후 출력
-    public void findmyFirstmatches(User user) {
-        // FirstMatch list를 가져온다.
-        List<FirstMatch> myFirstMatches = new ArrayList<>(); // 내가 호감보낸 상대 리스트 생성
-        // 매개변수와 User from 가 같으면 myFirstMatches 리스트에 담는다.
-        for (int i = 0; i < firstMatches.size(); i++) {
-            if (user/*사용자*/.equals(firstMatches.get(i).getFrom())) {
-                myFirstMatches.add(firstMatches.get(i));
-            }
-        }
-        // 조회된 리스트 출력
-        System.out.println(myFirstMatches);
-    }
-
-
-
 
 
     // acceptFlag -> true

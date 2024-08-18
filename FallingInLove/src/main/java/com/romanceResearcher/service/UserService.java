@@ -4,10 +4,7 @@ import com.romanceResearcher.domain.User;
 import com.romanceResearcher.repository.UserRepository;
 import com.romanceResearcher.view.UserView;
 
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 public class UserService {
 
@@ -108,4 +105,18 @@ public class UserService {
         }
     }
 
+    // 성별이 다른 유저만 필터링해서 List로 반환
+    public List<User> findMatchingPartner(User user) {
+        // 유저 목록 파일(DB)을 가져온다. users
+        // 매개변수의 성별과 조회된 목록들의 성별이 다른 유저들만 조회되도록 필터링한다.
+        List<User> userList = userRepository.findAll();
+        List<User> matchingPartners = new ArrayList<>();
+        for (int i = 0; i < userList.size(); i++) {
+            if (user.getGender() != userList.get(i).getGender()) {
+                matchingPartners.add(userList.get(i));
+            }
+        }
+        // 필터링된 조회를 리스트로 반환한다.
+        return matchingPartners;
+    }
 }

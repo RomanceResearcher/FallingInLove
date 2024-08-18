@@ -15,7 +15,7 @@ public class SecondMatchRepository {
     private List<SecondMatch> secondMatches;
     private final String SECOND_MATCH_FILENAME = "src/main/java/com/romanceResearcher/db/secondmatchdb.dat";
 
-    public SecondMatchRepository getInstance() {
+    public static SecondMatchRepository getInstance() {
         if (instance == null) {
             instance = new SecondMatchRepository();
         }

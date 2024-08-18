@@ -175,18 +175,6 @@ public class UserRepository {
         return Optional.of(null);
     }
 
-    // 성별이 다른 유저만 필터링해서 List로 반환
-    public List<User> findMatchingPartner(User user) {
-        // 유저 목록 파일(DB)을 가져온다. users
-        // 매개변수의 성별과 조회된 목록들의 성별이 다른 유저들만 조회되도록 필터링한다.
-        List<User> matchingPartners = new ArrayList<>();
-        for (int i = 0; i < users.size(); i++) {
-            if (user.getGender() != users.get(i).getGender()) {
-                matchingPartners.add(users.get(i));
-            }
-        }
-        // 필터링된 조회를 리스트로 반환한다.
-        return matchingPartners;
-    }
+
 
 }
