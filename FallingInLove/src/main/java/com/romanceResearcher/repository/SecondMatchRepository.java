@@ -5,6 +5,7 @@ import com.romanceResearcher.domain.User;
 import com.romanceResearcher.myio.MyObjectOutputStream;
 
 import java.io.*;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -12,7 +13,7 @@ import java.util.Optional;
 public class SecondMatchRepository {
 
     private static SecondMatchRepository instance;
-    private List<SecondMatch> secondMatches;
+    private List<SecondMatch> secondMatches = new ArrayList<>();
     private final String SECOND_MATCH_FILENAME = "src/main/java/com/romanceResearcher/db/secondmatchdb.dat";
 
     public static SecondMatchRepository getInstance() {
@@ -27,14 +28,9 @@ public class SecondMatchRepository {
         File file = new File(SECOND_MATCH_FILENAME);
 
         if (!file.exists()) {
-            SecondMatch sampleSecondMatch1 = new SecondMatch(Arrays.asList("testId01", "testId04"));
-            SecondMatch sampleSecondMatch2 = new SecondMatch(Arrays.asList("testId01", "testId05"));
-            SecondMatch sampleSecondMatch3 = new SecondMatch(Arrays.asList("testId01", "testId06"));
-            SecondMatch sampleSecondMatch4 = new SecondMatch(Arrays.asList("testId02", "testId04"));
-            SecondMatch sampleSecondMatch5 = new SecondMatch(Arrays.asList("testId03", "testId05"));
-            SecondMatch sampleSecondMatch6 = new SecondMatch(Arrays.asList("testId03", "testId06"));
+            List<SecondMatch> sampleData = new ArrayList<>();
 
-            saveSecondMatches(file);
+            saveSecondMatches(file, sampleData);
         }
         loadSencondMatches(file);
 
@@ -49,17 +45,17 @@ public class SecondMatchRepository {
             }
 
         } catch (EOFException e) {
-            System.out.println("SecondMatch 파일을 모두 로딩했습니다.");
+//            System.out.println("SecondMatch 파일을 모두 로딩했습니다.");
         } catch (IOException | ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
     }
 
     // 파일에 저장하기 (덮어쓰우기)
-    private void saveSecondMatches(File file) {
+    public void saveSecondMatches(File file, List<SecondMatch> secondMatchList) {
 
         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(file))) {
-            for (SecondMatch secondMatch : secondMatches) {
+            for (SecondMatch secondMatch : secondMatchList) {
                 oos.writeObject(secondMatch);
             }
         } catch (IOException e) {
@@ -72,7 +68,9 @@ public class SecondMatchRepository {
     // secondMatch 추가
     public void addSecondMatch(SecondMatch secondMatch) {
 
+        secondMatch.setSecondMatchNo(getSecondMatchNo());
         try (MyObjectOutputStream moo = new MyObjectOutputStream(new FileOutputStream(SECOND_MATCH_FILENAME, true))) {
+            secondMatch.setSecondMatchNo(secondMatch.getSecondMatchNo());
             moo.writeObject(secondMatch);
             secondMatches.add(secondMatch);
         } catch (IOException e) {
@@ -81,14 +79,26 @@ public class SecondMatchRepository {
 
     }
 
-    // SecondMatch 목록 조회
+    // SecondMatch 목록 조회 (userId 로 조회)
     public List<SecondMatch> findSecondMatchByUserId(String userId) {
+
+        List<SecondMatch> mySecondMatches = new ArrayList<>();
+
+        for(SecondMatch secondMatch : secondMatches) {
+            if(secondMatch.getCoupleId().contains(userId))
+                mySecondMatches.add(secondMatch);
+        }
+
+        return mySecondMatches;
+    }
+
+    // SecondMatch 전체 목록 조회
+    public List<SecondMatch> findAllSecondMatches() {
         return secondMatches;
     }
 
     // SecondMatch 수정
     public void updateSecondMatch(SecondMatch secondMatch) {
-        secondMatch.setFinalAccept(true);
 
         for (int i = 0; i < secondMatches.size(); i++) {
             if (secondMatch.getSecondMatchNo() == secondMatches.get(i).getSecondMatchNo()) {
@@ -98,7 +108,7 @@ public class SecondMatchRepository {
 
         File file = new File(SECOND_MATCH_FILENAME);
 
-        saveSecondMatches(file);
+        saveSecondMatches(file, secondMatches);
     }
 
     // SecondMatch 삭제
@@ -113,8 +123,17 @@ public class SecondMatchRepository {
 
         File file = new File(SECOND_MATCH_FILENAME);
 
-        saveSecondMatches(file);
+        saveSecondMatches(file, secondMatches);
     }
+
+    public long getSecondMatchNo() {
+        return secondMatches.get(secondMatches.size() - 1).getSecondMatchNo() + 1;
+    }
+
+    public void saveSecondMatchesList(List<SecondMatch> allSecondMatches) {
+        saveSecondMatches(new File(SECOND_MATCH_FILENAME), allSecondMatches);
+    }
+
 
     // 쌍방호감 성사
 

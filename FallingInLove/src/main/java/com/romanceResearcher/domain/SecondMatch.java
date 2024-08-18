@@ -1,6 +1,8 @@
 package com.romanceResearcher.domain;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
@@ -26,8 +28,12 @@ public class SecondMatch implements Serializable {
         this.secondMatchNo = secondMatchNo;
     }
 
-    public void setCouple(List<User> couple) {
-        this.couple = couple;
+    public void setCouple(List<String> couple) {
+        this.coupleId = couple;
+    }
+
+    public List<String> getCoupleId() {
+        return coupleId;
     }
 
     public void setFinalAccept(boolean finalAccept) {
@@ -51,4 +57,6 @@ public class SecondMatch implements Serializable {
     public int hashCode() {
         return Objects.hash(secondMatchNo, coupleId, finalAccept);
     }
+
+
 }

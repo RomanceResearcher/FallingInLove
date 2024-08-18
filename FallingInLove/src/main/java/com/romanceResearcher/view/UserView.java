@@ -1,7 +1,10 @@
 package com.romanceResearcher.view;
 
 import com.romanceResearcher.domain.User;
+import com.romanceResearcher.repository.MatchRepository;
+import com.romanceResearcher.service.MatchService;
 import com.romanceResearcher.service.PictureService;
+import com.romanceResearcher.service.SecondMatchService;
 import com.romanceResearcher.service.UserService;
 
 import java.util.Scanner;
@@ -11,10 +14,14 @@ public class UserView {
 
     private final User user; // 개인 유저
     private final UserService userService; // 개인 유저에 대한 서비스
+    private final MatchService matchService;
+    private final SecondMatchService secondMatchService;
 
-    public UserView(User user, UserService userService) {
+    public UserView(User user) {
         this.user = user;
-        this.userService = userService;
+        this.userService = UserService.getInstance();
+        this.matchService = MatchService.getInstance();
+        this.secondMatchService = SecondMatchService.getInstance();
     }
 
 
@@ -26,7 +33,7 @@ public class UserView {
         RandomMatchView randomMatchView = new RandomMatchView(user);
 
         while (true) {
-            System.out.print("원하는 메뉴를 선택하세요 (1 : 로그아웃, 2: 소개팅하러 가기, 3: 마이페이지, 4. 포인트 충전");
+            System.out.print("원하는 메뉴를 선택하세요 (1 : 로그아웃, 2: 소개팅하러 가기, 3: 마이페이지, 4. 포인트 충전) : ");
             int action = sc.nextInt();
             switch (action) {
                 case 1 : return 1;
@@ -34,6 +41,7 @@ public class UserView {
                 case 3 :
                     boolean deletedFlag = userInfoUi();
                     if (deletedFlag) return 2;
+                    break;
                 case 4 : chargePointView(sc); break;
                 default :
                     System.out.println("잘못 입력하셨습니다. 메뉴에 있는 번호를 입력해주세요.");
@@ -42,15 +50,7 @@ public class UserView {
         }
     }
 
-    // 포인트 충전 view
-    private void chargePointView(Scanner sc) {
 
-        System.out.print("얼마를 충전하시겠어요? : ");
-        int point = sc.nextInt();
-        user.setPoint(point);
-        System.out.println(point + " 가 충전 되었습니다.");
-        System.out.println("내 포인트 : " + user.getPoint());
-    }
 
     // 마이페이지 UI
     // 반환값
@@ -58,9 +58,9 @@ public class UserView {
     public boolean userInfoUi() {
         Scanner sc = new Scanner(System.in);
 
-        label:
+
         while (true) {
-            System.out.print("마이페이지입니다. (1 : 프로필 정보 조회, 2 : 프로필 정보 수정(사진 제외), 3 : 프로필 사진 수정, 4 : 회원 탈퇴, 5 : 뒤로 가기");
+            System.out.print("마이페이지입니다. (1 : 프로필 정보 조회, 2 : 프로필 정보 수정(사진 제외), 3 : 프로필 사진 수정, 4 : 회원 탈퇴, 5 : 뒤로 가기) : ");
             int action = sc.nextInt();
 
             switch (action) {
@@ -68,18 +68,20 @@ public class UserView {
                 case 2 : updateUserView(sc); break; // 정보 수정
                 case 3 : pictureRevisionView(sc); break; // 사진 정보 수정
                 case 4 : if (deleteUserView(sc)) return true; // 회원 탈퇴 기능 true : 회원 탈퇴가 된 경우
-                case 5 : System.out.println("이전 페이지로 이동합니다."); break label; // 뒤로 가기
+                case 5 : System.out.println("이전 페이지로 이동합니다."); return false; // 뒤로 가기
                 default : System.out.println("잘못 입력하셨습니다. 메뉴에 있는 번호를 입력해주세요."); break;
             }
         }
         // false : 회원 탈퇴를 안한 경우
-        return false;
+
     }
 
 
 
     // 회원 정보 수정 view
     private void updateUserView(Scanner sc) {
+        sc.nextLine();
+        String beforeId = user.getId(); // 이전 Id
         System.out.print("변경할 이름 : ");
         user.setName(sc.nextLine());
         System.out.print("변경할 비밀번호 : ");
@@ -90,32 +92,35 @@ public class UserView {
         user.setHp(sc.nextLine());
 
         userService.updateUser(user);
+        matchService.updateFirstMatch(beforeId, user);
     }
 
     // 사진 정보 수정 view
     private void pictureRevisionView(Scanner sc) {
         PictureService pictureService = new PictureService(user.getPictures());
         while (true) {
-            System.out.print("1 : 사진 추가, 2 : 기존 사진 수정, 3 : 사진 삭제, 4 : 뒤로 가기");
+            System.out.println("1 : 사진 추가, 2 : 기존 사진 수정, 3 : 사진 삭제, 4 : 뒤로 가기 ");
             int pictureMenu = sc.nextInt();
 
             if (pictureMenu == 1) { // 사진 추가
 
             } else if (pictureMenu == 2) { // 기존 사진 수정
                 if (pictureService.hasPictures()) { // 기존에 아무 사진도 없다면
-                    System.out.print("저장된 사진이 없습니다. 메뉴를 다시 선택해주세요.");
+                    System.out.println("저장된 사진이 없습니다. 메뉴를 다시 선택해주세요.");
                 } else { // 기존에 사진이 있다면
                     System.out.print("수정할 사진을 선택하세요 (인덱스 입력) : ");
-                    int idx = sc.nextInt();
+                    int picIndex = sc.nextInt();
+                    if (picIndex < 0 || picIndex >= user.getPictures().size())
+                        System.out.println("해당 인덱스의 사진은 존재하지 않습니다. 다시 입력해주세요. ");
                     System.out.print("대체할 사진을 입력해주세요 : ");
                     String newPicture = sc.nextLine();
-                    pictureService.updatePicture(idx, newPicture);
+                    pictureService.updatePicture(picIndex, newPicture);
                 }
             } else if (pictureMenu == 3) { // 사진 삭제
                 if (pictureService.getPictures().isEmpty()) { // 기존에 아무 사진도 없다면
-                    System.out.print("저장된 사진이 없습니다. 메뉴를 다시 선택해주세요.");
+                    System.out.println("저장된 사진이 없습니다. 메뉴를 다시 선택해주세요.");
                 } else { // 기존에 사진이 있다면
-                    System.out.print("변경할 사진의 인덱스 번호를 누르세요 (0번 인덱스부터 시작) : ");
+                    System.out.print("삭제할 사진의 인덱스 번호를 누르세요 (0번 인덱스부터 시작) : ");
                     int picIndex = sc.nextInt();
                     if (picIndex < 0 || picIndex >= user.getPictures().size()) { // 해당 인덱스의 사진이 없는 경우
                         System.out.println("해당 인덱스의 사진은 존재하지 않습니다. 다시 입력해주세요.");
@@ -126,6 +131,7 @@ public class UserView {
                 }
             } else if (pictureMenu == 4) { // 뒤로 가기
                 userService.updateUser(user); // 회원 정보 업데이트
+                matchService.updateFirstMatch(user.getId(), user);
                 break;
             } else { // 잘못된 메뉴 번호를 눌렀을 경우
                 System.out.println("잘못 입력하셨습니다. 메뉴에 있는 번호를 입력해주세요.");
@@ -141,6 +147,8 @@ public class UserView {
             System.out.println(user.getId() + "님 회원 탈퇴가 되었습니다.");
             System.out.println(user.getId() + "님 지금까지 저희 만년설을 이용해주셔서 감사합니다.");
             userService.deleteUser(user);
+            matchService.deleteMyAllFirstMatch(user);
+            secondMatchService.deleteMyAllSecondMatch(user.getId());
             return true;
         } else if (deleteResponse.equals("NO")) {
             System.out.println("탈퇴를 취소하셨습니다.");
@@ -150,4 +158,14 @@ public class UserView {
         return false;
     }
 
+
+    // 포인트 충전 view
+    private void chargePointView(Scanner sc) {
+
+        System.out.print("얼마를 충전하시겠어요? : ");
+        int point = sc.nextInt();
+        user.setPoint(point);
+        System.out.println(point + " 가 충전 되었습니다.");
+        System.out.println("내 포인트 : " + user.getPoint());
+    }
 }

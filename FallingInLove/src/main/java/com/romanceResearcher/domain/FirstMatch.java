@@ -2,6 +2,7 @@ package com.romanceResearcher.domain;
 
 import java.io.Serializable;
 import java.time.LocalTime;
+import java.util.Arrays;
 
 public class FirstMatch implements Serializable {
 
@@ -62,10 +63,14 @@ public class FirstMatch implements Serializable {
     @Override
     public String toString() {
         return "FirstMatch{" +
-                "to=" + to +
-                ", from=" + from +
+                "to=" + to.getName() +
+                ", from=" + from.getName() +
                 ", acceptFlag=" + acceptFlag +
                 ", createDate=" + createDate +
                 '}';
+    }
+
+    public SecondMatch changeToSecondMatch() {
+        return new SecondMatch(Arrays.asList(this.getTo().getId(), this.getFrom().getId()));
     }
 }

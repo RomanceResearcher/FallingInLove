@@ -7,7 +7,6 @@ import com.romanceResearcher.repository.UserRepository;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 import java.util.Scanner;
 
 public class MatchService {
@@ -39,18 +38,12 @@ public class MatchService {
     }
 
 
-    // 내가 좋아요 한 상대가 소개팅에 동의한다면 secondMatches 리스트에 기록 저장
-    public void succeseMatching() {
-        secondMatchService.addSecondMatch();
-    }
-
-
     // 호감을 보낸 유저와의 firstMatch 생성 및 리스트 추가
-    public void sendSignal(User randomDatingPartner) {
-        matchRepository.addFirstMatch(randomDatingPartner); // firstMatch 추가
+    public void sendSignal(User me, User randomDatingPartner) {
+        matchRepository.addFirstMatch(me, randomDatingPartner); // firstMatch 추가
     }
 
-    // 사용자한테 호감을 보낸 유저 목록 리스트 생성 후 반환
+    // 본인에게 호감을 보낸 유저 목록 리스트 생성 후 반환
     public List<FirstMatch> getReceiveSignalFromPartner(User user) {
         // FirstMatch list를 가져온다.
         List<FirstMatch> allMatches = matchRepository.findAllMatches();
@@ -86,5 +79,39 @@ public class MatchService {
         }
 
         return myFirstMatches;
+    }
+
+    // FirstMatch 기록 삭제하기
+    public void deleteMyFirstMatch(FirstMatch firstMatch) {
+        matchRepository.deleteFirstMatch(firstMatch);
+    }
+
+
+    // 회원 정보 수정되면 파일에도 정보가 수정되게끔하기
+    public void updateFirstMatch(String beforeId, User after) {
+
+        List<FirstMatch> allMatches = matchRepository.findAllMatches();
+        for (FirstMatch firstMatch : allMatches) {
+            if (firstMatch.getFrom().getId().equals(beforeId)) {
+                firstMatch.setFrom(after);
+            }
+            if (firstMatch.getTo().getId().equals(after.getId())) {
+                firstMatch.setTo(after);
+            }
+        }
+
+        matchRepository.saveFirstMatchList(allMatches);
+    }
+
+    public void deleteMyAllFirstMatch(User user) {
+        List<FirstMatch> allMatches = matchRepository.findAllMatches();
+
+        for (FirstMatch firstMatch : allMatches) {
+            if (firstMatch.getFrom().getId().equals(user.getId()) || firstMatch.getTo().getId().equals(user.getId())) {
+                allMatches.remove(firstMatch);
+            }
+        }
+
+        matchRepository.saveFirstMatchList(allMatches);
     }
 }

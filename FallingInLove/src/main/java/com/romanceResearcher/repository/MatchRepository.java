@@ -30,15 +30,10 @@ public class MatchRepository {
         File file = new File(FILENAME);
 
         if (!file.exists()) {
-            FirstMatch sample01 = new FirstMatch(1,new User(),new User(), LocalTime.now());
-            FirstMatch sample02 = new FirstMatch(2,new User(),new User(), LocalTime.now());
-            FirstMatch sample03 = new FirstMatch(3,new User(),new User(), LocalTime.now());
+            List<FirstMatch> sampleData = new ArrayList<>();
 
-            firstMatches.add(sample01);
-            firstMatches.add(sample02);
-            firstMatches.add(sample03);
 
-            saveFirstMatches(file);
+            saveFirstMatches(file, sampleData);
         }
         loadfirstMatches(file);
 
@@ -50,20 +45,21 @@ public class MatchRepository {
         try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(file))) {
             while (true) {
                 FirstMatch firstMatch = (FirstMatch) ois.readObject();
+                firstMatches.add(firstMatch);
             }
 
         } catch (EOFException e) {
-            System.out.println("파일을 모두 로딩했습니다.");
+//            System.out.println("파일을 모두 로딩했습니다.");
         } catch (IOException | ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
     }
 
     // firstMatches 파일에 데이터 저장하기
-    public void saveFirstMatches(File file) {
+    public void saveFirstMatches(File file, List<FirstMatch> firstMatchList) {
 
         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(file))) {
-            for (FirstMatch firstMatch : firstMatches) {
+            for (FirstMatch firstMatch : firstMatchList) {
                 oos.writeObject(firstMatch);
             }
         } catch (IOException e) {
@@ -74,9 +70,9 @@ public class MatchRepository {
 
 
     // 매치 기록 추가 (firstMatch Add)
-    public void addFirstMatch(User randomDatingPartner) {
+    public void addFirstMatch(User me, User randomDatingPartner) {
 
-        FirstMatch firstMatch = new FirstMatch(4, randomDatingPartner, new User()/*나의 정보*/, LocalTime.now());
+        FirstMatch firstMatch = new FirstMatch(getFirstMatchNo(), randomDatingPartner, me/*나의 정보*/, LocalTime.now());
         try (MyObjectOutputStream moo = new MyObjectOutputStream(new FileOutputStream(FILENAME, true))) {
 
             moo.writeObject(randomDatingPartner);
@@ -94,8 +90,32 @@ public class MatchRepository {
         return firstMatches;
     }
 
+    public void deleteFirstMatch(FirstMatch firstMatch) {
+
+        for (FirstMatch firstMatch1 : firstMatches) {
+            if (firstMatch1.getFirstMatchNo() == firstMatch.getFirstMatchNo()) {
+                firstMatches.remove(firstMatch1);
+            }
+        }
+
+        File file = new File(FILENAME);
+
+        saveFirstMatches(file, firstMatches);
+    }
+
+    public long getFirstMatchNo() {
+        return firstMatches.get(firstMatches.size() - 1).getFirstMatchNo() + 1;
+    }
+
+    public void saveFirstMatchList(List<FirstMatch> allMatches) {
+
+        saveFirstMatches(new File(FILENAME), allMatches);
+    }
+
 
     // acceptFlag -> true
+
+
     // sRepo (인자)
 
 }
