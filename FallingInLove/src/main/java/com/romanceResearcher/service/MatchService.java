@@ -1,5 +1,6 @@
 package com.romanceResearcher.service;
 
+import com.romanceResearcher.domain.FirstMatch;
 import com.romanceResearcher.domain.User;
 import com.romanceResearcher.repository.MatchRepository;
 import com.romanceResearcher.repository.UserRepository;
@@ -39,7 +40,7 @@ public class MatchService {
             try {
                 int action = sc.nextInt(); // 입력받은 번호를 action 변수에 저장
                 switch (action) {
-                    case 1: sendSignal(); continue; // 호감 보내기 -> 호감 보낸 기록을 생성해서 저장해야됌
+                    case 1: sendSignal(randomDatingPartner); continue; // 호감 보내기 -> 호감 보낸 기록을 생성해서 저장해야됌
                     case 2: continue; // 다음 상대 보기
                     case 3: return; // 메소드 종료
                     default :
@@ -53,14 +54,14 @@ public class MatchService {
         }
     }
 
-    // 호감을 보낸 유저의 acceptFlag 상태를 true로 변경
-    private void sendSignal(User partner) {
-        MatchRepository.acceptFlagUpdate(true);
-
-
+    // 호감을 보낸 유저와의 firstMatch 생성 및 리스트 추가
+    private void sendSignal(User randomDatingPartner) {
+        MatchRepository.addFirstMatch(User randomDatingPartner); // firstMatch 추가
     }
 
+    // 사용자가 호감을 보낸 유저 목록 조회
+    public void showSendSignaltoPartner(User user) {
+        MatchRepository.findmyFirstmatches(user/*사용자*/);
 
-
-
+    }
 }
