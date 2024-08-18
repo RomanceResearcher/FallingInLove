@@ -52,11 +52,6 @@
 
 <br>
 
-- 호감을 주고 받은 상대 프로필을 조회할 수 있습니다.
-![alt text](./img/signalUserList.png)
-
-<br>
-
 - 상대 사용자도 호감을 보낼 경우 소개팅이 주선됩니다.
 
 <br>
@@ -64,7 +59,7 @@
 ### 사용자의 호감 현황 조회
 
 - 사용자가 호감을 보낸 상대 사용자의 목록을 조회할 수 있습니다.
-![alt text](./img/showSendSignalToPartner.png)
+![alt text](./img/showReceiveSignalFromPartner.png)
 
 <br>
 
