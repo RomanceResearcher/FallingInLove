@@ -26,8 +26,8 @@ public class RandomMatchView {
     // 소개팅 UI
     public void datingUI() {
         // 1. 랜덤 소개팅 하기
-        // 2. 호감 받은 상대 프로필 조회
-        // 3. 호감 보낸 상대 프로필 조회
+        // 2. 사용자에게 호감 보낸 상대 프로필 조회
+        // 3. 사용자가 호감 보낸 상대 프로필 조회
         while (true) {
             System.out.println("===== 소개팅 화면입니다. =====");
             System.out.println("1 : 랜덤 소개팅 하기");
@@ -40,8 +40,8 @@ public class RandomMatchView {
                 int action = sc.nextInt(); // 입력받은 번호를 action 변수에 저장
                 switch (action) {
                     case 1: randomDatingView(); break; // 랜덤 매칭 기능 호출
-                    case 2: showReceiveSignalfromPartner(); break; // 호감 받은 상대 조회
-                    case 3: showSendSignaltoPartner(user); break; // 호감 보낸 상대 조회
+                    case 2: showReceiveSignalfromPartner(user); break; // 사용자에게 호감 보낸 상대 프로필 조회
+                    case 3: showSendSignaltoPartner(user); break; // 사용자가 호감 보낸 상대 프로필 조회
                     case 4: return; // 메소드 종료
                     default :
                         System.out.println("번호를 잘 못 입력하였습니다.");
@@ -55,7 +55,6 @@ public class RandomMatchView {
 
 
     }
-
 
 
     // 랜덤 소개팅 view
@@ -86,12 +85,12 @@ public class RandomMatchView {
         }
     }
 
-    // 호감 받은 상대 조회 (내가 호감 받음)
-    private void showReceiveSignalfromPartner() {
+    // 사용자에게 호감 보낸 상대 프로필 조회
+    private void showReceiveSignalfromPartner(User user) {
         matchService.getReceiveSignalFromPartner(user);
     }
 
-    // 호감 보낸 상대 조회 (내가 보낸 거)
+    // 사용자가 호감 보낸 상대 프로필 조회
     private void showSendSignaltoPartner(User user) {
         matchService.showSendSignaltoPartner(user);
     }
