@@ -34,7 +34,8 @@ public class RandomMatchView {
             System.out.println("1 : 랜덤 소개팅 하기");
             System.out.println("2 : 호감 받은 상대 프로필 조회하기");
             System.out.println("3 : 호감있는 상대 프로필 조회하기");
-            System.out.println("4 : 이전 화면으로 돌아가기");
+            System.out.println("4 : 서로 호감있는 소개팅 조회하기");
+            System.out.println("5 : 이전 화면으로 돌아가기");
             System.out.println("메뉴 선택 : ");
 
             try {
@@ -43,7 +44,8 @@ public class RandomMatchView {
                     case 1: randomDatingView(); break; // 랜덤 매칭 기능 호출
                     case 2: showReceiveSignalfromPartner(user); break; // 사용자에게 호감 보낸 상대 프로필 조회
                     case 3: showSendSignaltoPartner(user); break; // 사용자가 호감 보낸 상대 프로필 조회
-                    case 4: return; // 메소드 종료
+                    case 4: showSecondMatches(); break; //
+                    case 5: return; // 메소드 종료
                     default :
                         System.out.println("번호를 잘 못 입력하였습니다.");
                 }
@@ -56,7 +58,6 @@ public class RandomMatchView {
 
 
     }
-
 
     // 랜덤 소개팅 view
     public void randomDatingView() {
@@ -100,5 +101,10 @@ public class RandomMatchView {
         for (FirstMatch firstMatch : firstMatches) {
             System.out.println(firstMatch);
         }
+    }
+
+
+    private void showSecondMatches() {
+
     }
 }
