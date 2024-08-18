@@ -59,7 +59,7 @@
 ### 사용자의 호감 현황 조회
 
 - 사용자가 호감을 보낸 상대 사용자의 목록을 조회할 수 있습니다.
-![alt text](./img/showReceiveSignalFromPartner.png)
+![alt text](./img/showSendSignalToPartner.png)
 
 <br>
 
