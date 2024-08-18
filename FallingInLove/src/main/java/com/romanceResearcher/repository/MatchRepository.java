@@ -104,6 +104,9 @@ public class MatchRepository {
     }
 
     public long getFirstMatchNo() {
+        if(firstMatches.isEmpty()) {
+            return 0;
+        }
         return firstMatches.get(firstMatches.size() - 1).getFirstMatchNo() + 1;
     }
 

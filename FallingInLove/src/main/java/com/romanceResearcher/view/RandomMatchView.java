@@ -64,7 +64,6 @@ public class RandomMatchView {
 
     // 랜덤 소개팅 view
     public void randomDatingView() {
-        sc.nextLine();
         List<User> randomPartners = userService.findMatchingPartner(user);
         User randomDatingPartner = null;
         while (true) {
@@ -77,8 +76,11 @@ public class RandomMatchView {
 
             try {
                 int action = sc.nextInt(); // 입력받은 번호를 action 변수에 저장
+
                 switch (action) {
-                    case 1: matchService.sendSignal(user, randomDatingPartner); continue; // 호감 보내기 -> 호감 보낸 기록을 생성해서 저장해야됌
+                    case 1:
+                        System.out.println(action);
+                        matchService.sendSignal(user, randomDatingPartner); continue; // 호감 보내기 -> 호감 보낸 기록을 생성해서 저장해야됌
                     case 2: continue; // 다음 상대 보기
                     case 3: return; // 메소드 종료
                     default :
@@ -159,6 +161,7 @@ public class RandomMatchView {
 
     // SecondMatch 하나씩 보면서 매칭 수락 여부 묻는 view
     private void showEachSecondMatchView(List<SecondMatch> mySecondMatchList) {
+        sc.nextLine();
         while (true) {
             System.out.print("하니씩 조회하면서 매칭 버튼을 누르시겠어요? (YES or NO) : ");
             String response = sc.nextLine();

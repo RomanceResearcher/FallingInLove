@@ -127,6 +127,7 @@ public class SecondMatchRepository {
     }
 
     public long getSecondMatchNo() {
+        if(secondMatches.isEmpty()) return 0;
         return secondMatches.get(secondMatches.size() - 1).getSecondMatchNo() + 1;
     }
 
