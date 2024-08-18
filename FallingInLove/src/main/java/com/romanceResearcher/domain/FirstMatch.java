@@ -59,4 +59,13 @@ public class FirstMatch implements Serializable {
         this.acceptFlag = acceptFlag;
     }
 
+    @Override
+    public String toString() {
+        return "FirstMatch{" +
+                "to=" + to +
+                ", from=" + from +
+                ", acceptFlag=" + acceptFlag +
+                ", createDate=" + createDate +
+                '}';
+    }
 }
