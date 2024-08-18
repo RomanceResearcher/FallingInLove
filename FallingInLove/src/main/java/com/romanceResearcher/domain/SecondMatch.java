@@ -58,5 +58,11 @@ public class SecondMatch implements Serializable {
         return Objects.hash(secondMatchNo, coupleId, finalAccept);
     }
 
-
+    @Override
+    public String toString() {
+        return "SecondMatch{" +
+                "< " + coupleId.get(0) +  ", " + coupleId.get(1) + " >" +
+                ", finalAccept=" + finalAccept +
+                '}';
+    }
 }
