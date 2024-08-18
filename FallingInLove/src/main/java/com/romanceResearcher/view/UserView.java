@@ -92,7 +92,6 @@ public class UserView {
         user.setHp(sc.nextLine());
 
         userService.updateUser(user);
-        matchService.updateFirstMatch(beforeId, user);
     }
 
     // 사진 정보 수정 view
@@ -131,7 +130,6 @@ public class UserView {
                 }
             } else if (pictureMenu == 4) { // 뒤로 가기
                 userService.updateUser(user); // 회원 정보 업데이트
-                matchService.updateFirstMatch(user.getId(), user);
                 break;
             } else { // 잘못된 메뉴 번호를 눌렀을 경우
                 System.out.println("잘못 입력하셨습니다. 메뉴에 있는 번호를 입력해주세요.");

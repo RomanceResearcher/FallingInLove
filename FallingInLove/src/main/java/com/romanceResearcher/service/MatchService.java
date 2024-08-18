@@ -53,7 +53,7 @@ public class MatchService {
 
         // 매개변수와 User to 가 같으면 appealToUserFirstMatches 리스트에 담는다.
         for (int i = 0; i < allMatches.size(); i++) {
-            if (user.getId().equals(allMatches.get(i).getTo().getId())); {
+            if (user.getId().equals(allMatches.get(i).getTo())); {
                 appealToUserFirstMatches.add(allMatches.get(i));
             }
         }
@@ -73,7 +73,7 @@ public class MatchService {
 
         // 매개변수와 User from 가 같으면 myFirstMatches 리스트에 담는다.
         for (int i = 0; i < allMatches.size(); i++) {
-            if (user.getId()/*사용자*/.equals(allMatches.get(i).getFrom().getId())) {
+            if (user.getId()/*사용자*/.equals(allMatches.get(i).getFrom())) {
                 myFirstMatches.add(allMatches.get(i));
             }
         }
@@ -87,27 +87,11 @@ public class MatchService {
     }
 
 
-    // 회원 정보 수정되면 파일에도 정보가 수정되게끔하기
-    public void updateFirstMatch(String beforeId, User after) {
-
-        List<FirstMatch> allMatches = matchRepository.findAllMatches();
-        for (FirstMatch firstMatch : allMatches) {
-            if (firstMatch.getFrom().getId().equals(beforeId)) {
-                firstMatch.setFrom(after);
-            }
-            if (firstMatch.getTo().getId().equals(after.getId())) {
-                firstMatch.setTo(after);
-            }
-        }
-
-        matchRepository.saveFirstMatchList(allMatches);
-    }
-
     public void deleteMyAllFirstMatch(User user) {
         List<FirstMatch> allMatches = matchRepository.findAllMatches();
 
         for (FirstMatch firstMatch : allMatches) {
-            if (firstMatch.getFrom().getId().equals(user.getId()) || firstMatch.getTo().getId().equals(user.getId())) {
+            if (firstMatch.getFrom().equals(user.getId()) || firstMatch.getTo().equals(user.getId())) {
                 allMatches.remove(firstMatch);
             }
         }
