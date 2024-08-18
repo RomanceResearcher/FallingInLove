@@ -146,5 +146,9 @@ public class User implements Serializable {
                 '}';
     }
 
-
+    // 호감을 보낸 상대방의 정보 보기
+    public String showUserInfo() {
+        System.out.println("name = " + name +
+                ", birth = " + birth);
+    }
 }
