@@ -13,7 +13,7 @@ import java.util.Scanner;
 // 랜덤 매칭 화면
 public class RandomMatchView {
 
-    private final User user; // 개인 유저
+    private final User user; // 개인 유저git p
     private final MatchService matchService; // 개인 유저에 대한 Match 서비스
     private final UserService userService;
     private final SecondMatchService secondMatchService;
