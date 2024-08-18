@@ -13,14 +13,14 @@ public class RandomMatchView {
 
     private final User user; // 개인 유저
     private final MatchService matchService; // 개인 유저에 대한 Match 서비스
+    private final Scanner sc = new Scanner(System.in);
 
-    public RandomMatchView(User user, MatchService matchService) {
+    public RandomMatchView(User user) {
         this.user = user;
-        this.matchService = matchService;
+        this.matchService = new MatchService(UserRepository.getInstance());
     }
 
-    Scanner sc = new Scanner(System.in);
-    MatchService matchservice = new MatchService(new UserRepository()); // 수정 예정
+
     // 소개팅 UI
     public void datingUI() {
         // 1. 랜덤 소개팅 하기
