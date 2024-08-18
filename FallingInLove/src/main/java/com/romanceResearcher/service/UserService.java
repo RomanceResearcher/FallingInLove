@@ -73,7 +73,7 @@ public class UserService {
         if (userValidation(id, password, loginInfo)) {
             // 로그인 이후 화면으로 이동
             User findedUser = userRepository.findById(id).get();
-            UserView userView = new UserView(findedUser, this);
+            UserView userView = new UserView(findedUser);
             int actionResult = userView.firstHomePage();
             if (actionResult == 1) System.out.println("로그아웃 합니다.");
         }else {

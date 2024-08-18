@@ -30,6 +30,6 @@ public class PictureService {
     }
 
     public boolean hasPictures() {
-        return !pictures.isEmpty();
+        return pictures.isEmpty();
     }
 }
