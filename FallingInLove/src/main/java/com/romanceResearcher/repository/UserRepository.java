@@ -1,5 +1,6 @@
 package com.romanceResearcher.repository;
 
+import com.romanceResearcher.domain.FirstMatch;
 import com.romanceResearcher.domain.User;
 import com.romanceResearcher.myio.MyObjectOutputStream;
 
@@ -31,6 +32,7 @@ public class UserRepository {
         File file = new File(FILENAME);
 
         if (!file.exists()) {
+            List<User> sampleData = new ArrayList<>();
             User sample01 = new User("test01", "2015-10-15", "testId01", "pwd01", "email01", "010-1111-1111", 'M');
             User sample02 = new User("test02", "2014-09-25", "testId02", "pwd02", "email02", "010-2222-1111", 'M');
             User sample03 = new User("test03", "2016-11-08", "testId03", "pwd03", "email03", "010-3333-1111", 'M');
@@ -39,14 +41,21 @@ public class UserRepository {
             User sample05 = new User("test05", "2013-02-27", "testId05", "pwd05", "email05", "010-5555-1111", 'W');
             User sample06 = new User("test06", "2010-12-08", "testId06", "pwd06", "email06", "010-6666-1111", 'W');
 
-            users.add(sample01);
-            users.add(sample02);
-            users.add(sample03);
-            users.add(sample04);
-            users.add(sample05);
-            users.add(sample06);
+            sample01.setUserNo(1);
+            sample02.setUserNo(2);
+            sample03.setUserNo(3);
+            sample04.setUserNo(4);
+            sample05.setUserNo(5);
+            sample06.setUserNo(6);
 
-            saveUser(file);
+            sampleData.add(sample01);
+            sampleData.add(sample02);
+            sampleData.add(sample03);
+            sampleData.add(sample04);
+            sampleData.add(sample05);
+            sampleData.add(sample06);
+
+            saveUser(file, sampleData);
         }
         loadUser(file);
 
@@ -63,17 +72,17 @@ public class UserRepository {
             }
 
         } catch (EOFException e) {
-            System.out.println("파일을 모두 로딩했습니다.");
+//            System.out.println("파일을 모두 로딩했습니다.");
         } catch (IOException | ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
     }
 
     // userRe 파일에 데이터 저장하기
-    public void saveUser(File file) {
+    public void saveUser(File file, List<User> userList) {
 
         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(file))) {
-            for (User user : users) {
+            for (User user : userList) {
                 oos.writeObject(user);
             }
         } catch (IOException e) {
@@ -116,7 +125,7 @@ public class UserRepository {
                 users.set(i, user);
 
                 File file = new File(FILENAME);
-                saveUser(file);
+                saveUser(file, users);
                 return 1;
             }
         }
@@ -132,7 +141,7 @@ public class UserRepository {
                 userIdPw.remove(user.getId());
 
                 File file = new File(FILENAME);
-                saveUser(file);
+                saveUser(file, users);
                 return 1;
             }
         }
