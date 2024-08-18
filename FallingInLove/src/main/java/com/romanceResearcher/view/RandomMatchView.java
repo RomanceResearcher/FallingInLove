@@ -1,5 +1,6 @@
 package com.romanceResearcher.view;
 
+import com.romanceResearcher.domain.FirstMatch;
 import com.romanceResearcher.domain.User;
 import com.romanceResearcher.repository.UserRepository;
 import com.romanceResearcher.service.MatchService;
@@ -87,11 +88,17 @@ public class RandomMatchView {
 
     // 사용자에게 호감 보낸 상대 프로필 조회
     private void showReceiveSignalfromPartner(User user) {
-        matchService.getReceiveSignalFromPartner(user);
+        List<FirstMatch> firstMatches = matchService.getReceiveSignalFromPartner(user);
+        for (FirstMatch firstMatch : firstMatches) {
+            System.out.println(firstMatch);
+        }
     }
 
     // 사용자가 호감 보낸 상대 프로필 조회
     private void showSendSignaltoPartner(User user) {
-        matchService.showSendSignaltoPartner(user);
+        List<FirstMatch> firstMatches = matchService.showSendSignaltoPartner(user);
+        for (FirstMatch firstMatch : firstMatches) {
+            System.out.println(firstMatch);
+        }
     }
 }
