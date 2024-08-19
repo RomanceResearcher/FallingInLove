@@ -63,7 +63,7 @@ public class MatchService {
 
 
     // 내가 호감보낸 상대 목록 리스트 생성 후 반환
-    public List<FirstMatch> showSendSignaltoPartner(User user) {
+    public List<FirstMatch> showSendSignalToPartner(User user) {
 
         // FirstMatch list를 가져온다.
         List<FirstMatch> allMatches = matchRepository.findAllMatches();

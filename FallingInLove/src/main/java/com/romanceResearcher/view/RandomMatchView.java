@@ -45,8 +45,8 @@ public class RandomMatchView {
                 int action = sc.nextInt(); // 입력받은 번호를 action 변수에 저장
                 switch (action) {
                     case 1: randomDatingView(); break; // 랜덤 매칭 기능 호출
-                    case 2: showReceiveSignalfromPartnerView(user); break; // 사용자에게 호감 보낸 상대 프로필 조회
-                    case 3: showSendSignaltoPartnerView(user); break; // 사용자가 호감 보낸 상대 프로필 조회
+                    case 2: showReceiveSignalFromPartnerView(user); break; // 사용자에게 호감 보낸 상대 프로필 조회
+                    case 3: showSendSignalToPartnerView(user); break; // 사용자가 호감 보낸 상대 프로필 조회
                     case 4: showSecondMatchesView(); break; // 쌍방 호감 기록 조회
                     case 5: return; // 메소드 종료
                     default :
@@ -94,7 +94,7 @@ public class RandomMatchView {
     }
 
     // 본인에게 호감 보낸 상대 프로필 조회
-    private void showReceiveSignalfromPartnerView(User user) {
+    private void showReceiveSignalFromPartnerView(User user) {
         List<FirstMatch> firstMatches = matchService.getReceiveSignalFromPartner(user);
         for (FirstMatch firstMatch : firstMatches) {
             System.out.println(firstMatch);
@@ -109,8 +109,8 @@ public class RandomMatchView {
     }
 
     // 본인이 호감 보낸 상대 프로필 조회
-    private void showSendSignaltoPartnerView(User user) {
-        List<FirstMatch> firstMatches = matchService.showSendSignaltoPartner(user);
+    private void showSendSignalToPartnerView(User user) {
+        List<FirstMatch> firstMatches = matchService.showSendSignalToPartner(user);
         for (FirstMatch firstMatch : firstMatches) {
             System.out.println(firstMatch);
         }
